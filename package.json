@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "globalInstall": "node ./scripts/install-global.js",
     "---": "rimraf 是安装在全局的命令，用于删除文件和目录 可执行 pnpm globalInstall 安装",

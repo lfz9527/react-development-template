@@ -1,6 +1,5 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { buildPlugins } from "./vite.conf/plugin";
-import { loadEnv } from "vite";
 import buildConfig from "./vite.conf/config";
 
 export default defineConfig((conf) => {

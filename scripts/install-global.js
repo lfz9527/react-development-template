@@ -16,7 +16,7 @@ packages.forEach((pkg) => {
       execSync(`npm install -g ${pkg}`, { stdio: "inherit" });
       console.log(`[✔] ${pkg} 安装成功`);
     } catch (err) {
-      console.error(`[✖] 安装 ${pkg} 失败，可能需要管理员权限`);
+      console.error(`[✖] 安装 ${pkg} 失败`, err);
     }
   }
 });

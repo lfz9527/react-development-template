@@ -28,6 +28,11 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "vite.conf/**/*.ts", "scripts/**/*.ts"],
+  "include": [
+    "src",
+    "vite.conf/**/*.ts",
+    "scripts/**/*.ts",
+    "scripts/install-global.js"
+  ],
   "exclude": ["node_modules", "dist"]
 }
