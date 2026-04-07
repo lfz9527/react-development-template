@@ -21,7 +21,7 @@ const buildConfig = ({ mode, env }: Props): ReturnType<typeof defineConfig> => {
   return {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
+        '@': path.resolve(__dirname, '../src'),
       },
     },
     server: {
