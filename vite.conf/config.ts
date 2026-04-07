@@ -1,27 +1,27 @@
-import { defineConfig, type ConfigEnv } from "vite";
-import path from "path";
-import pkg from "../package.json";
+import { defineConfig, type ConfigEnv } from 'vite'
+import path from 'path'
+import pkg from '../package.json'
 
-const version = pkg.version ?? "";
+const version = pkg.version ?? ''
 
 type Props = ConfigEnv & {
-  isBuild?: boolean;
-  env: Record<string, string>;
-};
+  isBuild?: boolean
+  env: Record<string, string>
+}
 const buildConfig = ({ mode, env }: Props): ReturnType<typeof defineConfig> => {
-  const isProd = mode === "production";
+  const isProd = mode === 'production'
 
   const minify = {
     compress: {
       dropConsole: isProd,
       dropDebugger: isProd,
     },
-  };
+  }
 
   return {
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "src"),
+        '@': path.resolve(__dirname, 'src'),
       },
     },
     server: {
@@ -29,8 +29,8 @@ const buildConfig = ({ mode, env }: Props): ReturnType<typeof defineConfig> => {
       host: true,
       port: 9529,
       proxy: {
-        "/api": {
-          target: "http://192.168.31.163:8003",
+        '/api': {
+          target: 'http://192.168.31.163:8003',
           changeOrigin: true,
         },
       },
@@ -44,22 +44,22 @@ const buildConfig = ({ mode, env }: Props): ReturnType<typeof defineConfig> => {
       rolldownOptions: {
         output: {
           minify,
-          chunkFileNames: "js/[name]-[hash].js",
-          entryFileNames: "js/[name]-[hash].js",
+          chunkFileNames: 'js/[name]-[hash].js',
+          entryFileNames: 'js/[name]-[hash].js',
           assetFileNames: (info) => {
-            const name = info.names?.[0] ?? info.originalFileNames?.[0] ?? "";
-            const ext = name.split(".").pop() ?? "";
+            const name = info.names?.[0] ?? info.originalFileNames?.[0] ?? ''
+            const ext = name.split('.').pop() ?? ''
             if (/^(gif|jpe?g|png|svg)$/.test(ext))
-              return "assets/[name]-[hash][extname]";
-            if (ext === "css") return "css/[name]-[hash][extname]";
-            if (ext === "ttf") return "font/[name]-[hash][extname]";
-            return "assets/[name]-[hash][extname]";
+              return 'assets/[name]-[hash][extname]'
+            if (ext === 'css') return 'css/[name]-[hash][extname]'
+            if (ext === 'ttf') return 'font/[name]-[hash][extname]'
+            return 'assets/[name]-[hash][extname]'
           },
         },
       },
-      sourcemap: env.VITE_BUILD_SOURCEMAP === "true",
+      sourcemap: env.VITE_BUILD_SOURCEMAP === 'true',
     },
-  };
-};
+  }
+}
 
-export default buildConfig;
+export default buildConfig
