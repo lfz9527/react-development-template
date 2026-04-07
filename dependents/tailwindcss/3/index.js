@@ -11,6 +11,15 @@ const cssTemplate = `
 `
 const cssPath = 'styles/tailwind.css'
 
+const postcssConfig = `
+export default {
+ plugins: {
+   tailwindcss: {},
+   autoprefixer: {},
+ },
+}
+`
+
 function install() {
   const { log, dependent, version } = context
   log.info('安装依赖')
@@ -74,6 +83,14 @@ function importDep() {
   }
 }
 
+// 构建postcss.config.js
+function buildPostcssConfig() {
+  const { log, ROOT_DIR } = context
+  log.info('构建postcss.config.js')
+  const filePath = path.join(ROOT_DIR, 'postcss.config.js')
+  fs.writeFileSync(filePath, postcssConfig, 'utf-8')
+}
+
 export default async function run(ctx) {
   context = ctx
   const { log, dependent, version, templateDir } = context
@@ -82,6 +99,7 @@ export default async function run(ctx) {
 
   install()
   modifyConfig()
+  buildPostcssConfig()
   addTailwindCommand()
   importDep()
 }
