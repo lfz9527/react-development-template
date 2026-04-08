@@ -4,10 +4,11 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
-import prettierPlugin from 'eslint-plugin-prettier'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
-const ignore = ['dist', 'node_modules', 'public']
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+
+const ignore = ['dist', 'node_modules', 'public', 'pnpm-lock.yaml', 'README.md']
 
 export default defineConfig([
   globalIgnores(ignore),
@@ -40,14 +41,15 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'off',
     },
   },
+  eslintPluginPrettierRecommended,
   {
     files: ['**/*.{ts,tsx,js}'],
-    plugins: {
-      prettier: prettierPlugin,
-    },
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+      indent: 'off',
+      '@typescript-eslint/indent': 'off',
+      'no-mixed-spaces-and-tabs': 'off',
     },
   },
-  prettier, // 必须放在最后
+  prettier,
 ])
