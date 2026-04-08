@@ -1,8 +1,15 @@
+import { useAuthor } from '@/store'
+
 export default function App() {
-  const a = 2323
+  const { token, setToken } = useAuthor((state) => state)
+
+  const handleClick = () => {
+    setToken(Date.now())
+  }
   return (
-    <h1 className='flex flex-wrap text-nowrap text-ellipsis text-red-500'>
-      app {a}
-    </h1>
+    <>
+      <button onClick={handleClick}>Click me</button>
+      <p>{token}</p>
+    </>
   )
 }

@@ -39,6 +39,7 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'off',
       // 允许未使用的变量
       '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
     },
   },
   eslintPluginPrettierRecommended,
