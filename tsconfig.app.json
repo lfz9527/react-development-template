@@ -30,7 +30,7 @@
   },
   "include": [
     "src",
-    "vite.conf/**/*.ts",
+    "vite.config/**/*.ts",
     "scripts/**/*.ts",
     "scripts/install-global.js"
   ],
