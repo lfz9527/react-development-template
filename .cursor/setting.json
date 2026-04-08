@@ -2,7 +2,10 @@
   "files.eol": "\n",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll": "always",
+    "source.fixAll.eslint": "always",
+    "source.fixAll.prettier": "always",
+    "source.fixAll.stylelint": "always"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "css.lint.unknownAtRules": "ignore"
 }
