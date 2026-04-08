@@ -1,5 +1,5 @@
-// 日志中
 import { type StateCreator, type StoreMutatorIdentifier } from 'zustand'
+import { isProd } from '@/constants'
 
 type Logger = <
   T,
@@ -19,6 +19,8 @@ type LoggerImpl = <T>(
 type SetArgs = Parameters<Parameters<StateCreator<unknown, [], []>>[0]>
 
 function Log(name: string, get: () => any) {
+  if (isProd) return
+
   const prefix = name ? `[${name}]` : '[store]'
   console.group(`%c${prefix} store updated`, 'color: #7f77dd; font-weight: 500')
   console.log('next state:', get())

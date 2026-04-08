@@ -22,7 +22,7 @@ export const useAuthor = create<State & Action>()(
         }),
         {
           name: 'app-author',
-          storage: createJSONStorage(() => sessionStorage),
+          // storage: createJSONStorage(() => sessionStorage),
         }
       )
     ),

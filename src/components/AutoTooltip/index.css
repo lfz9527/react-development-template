@@ -1,0 +1,17 @@
+.auto-tooltip {
+  position: relative;
+}
+
+.ellipsis-single {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-multiline {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines, 1);
+  overflow-wrap: break-word;
+}
