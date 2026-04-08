@@ -1,9 +1,9 @@
+import { useRef, useEffect } from 'react'
+
 import { cn } from '@/utils/common'
 
 import './index.css'
-import { useRef, useEffect } from 'react'
-
-type Props = Global.elAttrs<HTMLDivElement> & {
+export type AutoTooltipProps = Global.elAttrs<HTMLDivElement> & {
   text: string | number
   lines?: number
 }
@@ -13,7 +13,7 @@ export default function AutoTooltip({
   style,
   lines = 1,
   ...props
-}: Props) {
+}: AutoTooltipProps) {
   const divRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

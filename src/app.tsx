@@ -24,11 +24,7 @@ export default function App() {
         <button onClick={handleClick}>Click me</button>
         <button onClick={() => setLines(lines + 1)}>add Lines</button>
       </div>
-      <AutoTooltip
-        style={{ width: 300 }}
-        text={token}
-        lines={lines}
-      />
+      <AutoTooltip text={token} />
     </>
   )
 }
