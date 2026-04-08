@@ -28,8 +28,8 @@ module.exports = {
   // 2. 提示语优化：去除了多余的 \n（cz底层会自动换行），话术更清晰友好
   messages: {
     type: '请选择您要提交的更改类型:',
-    scope: '请输入更改的范围 (可选, 如: 组件名/文件名):',
-    customScope: '请输入自定义的范围:',
+    // scope: '请输入更改的范围 (可选, 如: 组件名/文件名):',
+    // customScope: '请输入自定义的范围:',
     subject: '请简明扼要地描述更改内容 (必填):',
     body: '请提供详细的更改描述 (可选, 使用 "|" 换行):',
     breaking: '列出任何非兼容性的破坏性变更 (可选):',
@@ -44,5 +44,5 @@ module.exports = {
   subjectLimit: 100,
 
   // 4. 提效配置：默认跳过详细描述和关联 Issue，极大提升日常提交效率（如需要可在此数组中移除）
-  skipQuestions: ['body', 'breaking', 'footer'],
+  skipQuestions: ['scope', 'body', 'breaking', 'footer'],
 }

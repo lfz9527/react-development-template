@@ -25,6 +25,17 @@
       "commit-msg": "commitlint --config .commitlintrc.js -E HUSKY_GIT_PARAMS"
     }
   },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable",
+      "config": {
+        "path": "./.cz-config.cjs"
+      }
+    },
+    "cz-customizable": {
+      "config": "./.cz-config.cjs"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
