@@ -1,7 +1,6 @@
 import path from 'path'
 
-export const cssIns = `
-  @tailwind base;
+export const cssIns = `@tailwind base;
   @tailwind components;
   @tailwind utilities;
 `

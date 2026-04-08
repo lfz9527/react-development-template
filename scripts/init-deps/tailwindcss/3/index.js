@@ -5,7 +5,6 @@ import fs from 'fs'
 import {
   needInstallDeps,
   getTwConfPath,
-  cssInstPath,
   cssIns,
   postcssConfig,
 } from './template.js'
@@ -15,8 +14,10 @@ import {
   formatPath,
   isFileExists,
   readExecutableFile,
-  removeComments,
 } from '../../../utils.js'
+
+import { importCssToMain, cssInstPath } from '../utils.js'
+
 import path from 'node:path'
 
 const payload = JSON.parse(process.env.INIT_PAYLOAD)
@@ -33,6 +34,7 @@ export default async function main() {
   await modifyTwConfig({ twConfPath })
   modifyPostcssConfig()
   addTailwindCss()
+  importCssToMain()
 
   execSync('pnpm lint:fix', { stdio: 'inherit' })
 }
@@ -142,28 +144,7 @@ function addTailwindCss() {
     fs.mkdirSync(dir, { recursive: true })
     fs.writeFileSync(cssFullInstPath, cssIns, 'utf-8')
     log.info(`新增文件: ${formatPath(cssFullInstPath)}`)
-    importCss()
   } catch (error) {
     log.error(`添加指令在 ${cssFullInstPath} 失败`, error)
-  }
-}
-
-function importCss() {
-  log.title('main.ts 文件引入')
-  const mainFilePath = path.join(ROOT_DIR, 'src/main.tsx')
-  const importPath = `import '${cssInstPath.replace('src', '@')}'`
-
-  try {
-    if (!isFileExists(mainFilePath)) {
-      throw new Error(`${formatPath(mainFilePath)} 文件不存在`)
-    }
-
-    const oldContent = fs.readFileSync(mainFilePath, 'utf-8')
-    if (removeComments(oldContent).includes(importPath)) {
-      return
-    }
-    fs.writeFileSync(mainFilePath, `${importPath}\n${oldContent}`, 'utf-8')
-  } catch (error) {
-    log.error(`使用依赖 ${dependent} 失败`, error)
   }
 }

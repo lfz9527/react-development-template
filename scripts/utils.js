@@ -1,6 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 import url from 'url'
+import { SyntaxKind } from 'ts-morph'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 export const ROOT_DIR = path.resolve(__dirname, '../')
@@ -113,4 +114,20 @@ export function removeComments(code) {
     }
     return match
   })
+}
+
+/**
+ * 确保导入
+ * @param {*} sourceFile
+ */
+export function ensureImport(sourceFile, { spec, defaultImport }) {
+  const exists = sourceFile
+    .getImportDeclarations()
+    .some((imp) => imp.getModuleSpecifierValue() === spec)
+  if (!exists) {
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: spec,
+      defaultImport,
+    })
+  }
 }
