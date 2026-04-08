@@ -54,6 +54,8 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@eslint/js": "^9.39.4",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -80,6 +82,7 @@
     "ts-morph": "^27.0.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.57.0",
+    "unplugin-icons": "^23.0.1",
     "vite": "^8.0.1",
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-env-parse": "^1.0.15",

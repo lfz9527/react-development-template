@@ -1,5 +1,6 @@
 import { useAuthor } from '@/store'
-import Favicon from '@/assets/icon/favicon.svg'
+
+import Loading from '~icons/local-icons/loading'
 
 import AutoTooltip from '@/components/AutoTooltip'
 import { useState } from 'react'
@@ -13,7 +14,7 @@ export default function App() {
   }
   return (
     <>
-      <img src={Favicon} />
+      <Loading />
       <div
         style={{
           display: 'flex',

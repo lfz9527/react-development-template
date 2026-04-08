@@ -1,11 +1,15 @@
 import { type ConfigEnv, type PluginOption } from 'vite'
+import path from 'path'
 import react from '@vitejs/plugin-react'
 import { compression } from 'vite-plugin-compression2'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { visualizer } from 'rollup-plugin-visualizer'
 import stylelint from 'vite-plugin-stylelint'
-
+import Icons from 'unplugin-icons/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import type { ImportMetaEnv } from '../src/types/env'
+
+const defaultIconSize = 28
 
 type Props = {
   mode: ConfigEnv['mode']
@@ -20,6 +24,27 @@ export const buildPlugins = ({ env, isBuild }: Props) => {
 
   const plugins: PluginOption[] = [
     react(),
+    Icons({
+      compiler: 'jsx',
+      jsx: 'react',
+      customCollections: {
+        'local-icons': FileSystemIconLoader(
+          path.resolve(__dirname, '../src/assets/icon'),
+          (svg) =>
+            svg
+              // 替换或添加 fill
+              .replace(/fill=".*?"/, 'fill="currentColor"')
+              .replace(/width=".*?"/, `width="${defaultIconSize}"`)
+              .replace(/height=".*?"/, `height="${defaultIconSize}"`)
+              // width/height/fill，则添加
+              .replace(/^<svg/, (match) =>
+                match.includes('width')
+                  ? match
+                  : '<svg width="32" height="32" fill="currentColor"'
+              )
+        ),
+      },
+    }),
     stylelint({
       fix: true, // 开启自动修复
       include: ['**/*.{css,scss,less}'], // 仅检查样式文件
@@ -34,18 +59,18 @@ export const buildPlugins = ({ env, isBuild }: Props) => {
     // 压缩gzip格式
 
     isGzip &&
-    compression({
-      algorithms: ['gzip'],
-    }),
+      compression({
+        algorithms: ['gzip'],
+      }),
 
     // 代码分析
     VITE_BUILD_ANALYZE &&
-    visualizer({
-      open: true, // 打包后自动打开浏览器
-      gzipSize: true, // 显示 gzip 后体积
-      brotliSize: true, // 显示 brotli 后体积
-      filename: 'analyze.html', // 生成的报告文件名
-    }),
+      visualizer({
+        open: true, // 打包后自动打开浏览器
+        gzipSize: true, // 显示 gzip 后体积
+        brotliSize: true, // 显示 brotli 后体积
+        filename: 'analyze.html', // 生成的报告文件名
+      }),
   ]
 
   return plugins
