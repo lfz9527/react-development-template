@@ -1,8 +1,8 @@
 import path from 'path'
 
 export const cssIns = `@tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 `
 export const cssInstPath = 'src/styles/tailwind.css'
 

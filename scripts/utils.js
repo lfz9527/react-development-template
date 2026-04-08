@@ -1,7 +1,6 @@
 import path from 'path'
 import fs from 'fs'
 import url from 'url'
-import { SyntaxKind } from 'ts-morph'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 export const ROOT_DIR = path.resolve(__dirname, '../')

@@ -46,7 +46,6 @@ export default defineConfig([
       prettier: prettierPlugin,
     },
     rules: {
-      usePrettierrc: true, // 确保读取根目录 .prettierrc 要不然会读prettier 的默认配置
       'prettier/prettier': 'error',
     },
   },

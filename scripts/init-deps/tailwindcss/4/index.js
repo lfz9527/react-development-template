@@ -28,6 +28,7 @@ export default async function main() {
   useVitePlugin()
   addTailwindCss()
   importCssToMain()
+  execSync('pnpm lint:fix', { stdio: 'inherit' })
 }
 main()
 
