@@ -12,27 +12,50 @@
     "lint-stylelint:fix": "stylelint \"**/*.{css,scss,less}\" --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
+    "prepare": "husky",
+    "commit": "git-cz",
     "init-dep": "node ./scripts/init-deps/index.js",
     "globalInstall": "node ./scripts/install-global.js",
     "---": "rimraf 是安装在全局的命令，用于删除文件和目录 可执行 pnpm globalInstall 安装",
     "clean": "rimraf node_modules pnpm-lock.yaml || exit 0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint --config .commitlintrc.js -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,less,md,html,json}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
     "@eslint/js": "^9.39.4",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "commitizen": "^4.3.1",
+    "commitlint-config-cz": "^0.13.3",
+    "cz-customizable": "^7.5.4",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "local-pkg": "^1.1.2",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",

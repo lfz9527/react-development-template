@@ -8,5 +8,5 @@
     "source.fixAll.stylelint": "always"
   },
   "css.lint.unknownAtRules": "ignore",
-  "cSpell.words": ["esbenp"]
+  "cSpell.words": ["commitlintrc", "esbenp"]
 }
