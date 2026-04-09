@@ -9,7 +9,7 @@ import Icons from 'unplugin-icons/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import type { ImportMetaEnv } from '../src/types/env'
 
-const defaultIconSize = 28
+const defaultIconSize = 24
 
 type Props = {
   mode: ConfigEnv['mode']

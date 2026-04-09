@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 
 import { cn } from '@/utils/common'
 
-import './index.css'
+import styles from './index.module.css'
 export type AutoTooltipProps = Global.elAttrs<HTMLDivElement> & {
   text: string | number
   lines?: number
@@ -41,8 +41,8 @@ export default function AutoTooltip({
     <div
       ref={divRef}
       className={cn(
-        'auto-tooltip',
-        lines < 2 ? 'ellipsis-single' : 'ellipsis-multiline',
+        styles['auto-tooltip'],
+        lines < 2 ? styles['ellipsis-single'] : styles['ellipsis-multiline'],
         className
       )}
       style={{
