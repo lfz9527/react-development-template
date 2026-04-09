@@ -9,12 +9,14 @@ import {
   useEventListener,
   useTimeout,
   useStorage,
+  useCountdown,
 } from '@/hooks'
 
 export default function App() {
   const isMobile = useIsMobile()
   const { token, setToken } = useAuthor()
   const [lines, setLines] = useState(1)
+  const [count, { start, stop, reset }] = useCountdown({ countStart: 60 })
 
   const { value, setValue, remove } = useStorage({
     key: 'ttt',
@@ -38,6 +40,11 @@ export default function App() {
     <>
       {isMobile ? '移动端' : '非移动端'}
       <p>window.innerWidth:{innerWidth}</p>
+      <button onClick={start}>开始倒计时</button>
+      <button onClick={stop}>停止倒计时</button>
+      <button onClick={reset}>重置倒计时</button>
+
+      <p>倒计时:{count}</p>
       <button onClick={() => setValue(Date.now().toString())}>
         更新缓存数据
       </button>

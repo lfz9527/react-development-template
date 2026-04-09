@@ -5,7 +5,6 @@ import { useLatest } from './useLatest'
 export function useInterval(callback: () => void, delay?: number) {
   const savedCallback = useLatest(callback)
 
-  // Set up the interval.
   useEffect(() => {
     if (delay && delay < 0) {
       return
