@@ -8,12 +8,19 @@ import {
   useDebounceValue,
   useEventListener,
   useTimeout,
+  useStorage,
 } from '@/hooks'
 
 export default function App() {
   const isMobile = useIsMobile()
   const { token, setToken } = useAuthor()
   const [lines, setLines] = useState(1)
+
+  const { value, setValue, remove } = useStorage({
+    key: 'ttt',
+    initialValue: '',
+    storage: 'local',
+  })
 
   const [innerWidth, setInnerWidth] = useDebounceValue(0)
   useEventListener('resize', () => {
@@ -31,6 +38,11 @@ export default function App() {
     <>
       {isMobile ? '移动端' : '非移动端'}
       <p>window.innerWidth:{innerWidth}</p>
+      <button onClick={() => setValue(Date.now().toString())}>
+        更新缓存数据
+      </button>
+      <button onClick={() => remove()}>移除缓存数据</button>
+      <p>缓存数据:{value}</p>
       <div>
         <div
           style={{
