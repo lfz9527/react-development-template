@@ -27,11 +27,9 @@ function setRef<T>(ref: Ref<T>, value: T | null) {
  */
 export function useComposedRef<T>(...refs: Ref<T>[]): RefCallback<T> {
   const storedRefs = useRef(refs)
-
+  storedRefs.current = refs
   const callbackRef = useCallback(
     (node: T | null) => {
-      storedRefs.current = refs
-
       for (const ref of storedRefs.current) {
         setRef(ref, node)
       }
