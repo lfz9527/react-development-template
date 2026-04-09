@@ -1,12 +1,11 @@
 import { useAuthor } from '@/store'
-
-import Loading from '@/components/Loading'
-
-import AutoTooltip from '@/components/AutoTooltip'
 import { useState } from 'react'
 
+import { useIsMobile } from '@/hooks'
+
 export default function App() {
-  const { token, setToken } = useAuthor((state) => state)
+  const isMobile = useIsMobile()
+  const { token, setToken } = useAuthor()
   const [lines, setLines] = useState(1)
 
   const handleClick = () => {
@@ -14,16 +13,19 @@ export default function App() {
   }
   return (
     <>
-      <Loading />
-      <div
-        style={{
-          display: 'flex',
-          gap: 10,
-        }}
-      >
-        <button onClick={handleClick}>Click me</button>
-        <button onClick={() => setLines(lines + 1)}>add Lines</button>
-        <AutoTooltip text={token} />
+      {isMobile ? '移动端' : '非移动端'}
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            gap: 10,
+            flexShrink: 0,
+          }}
+        >
+          <button onClick={handleClick}>Click me</button>
+          <button onClick={() => setToken('')}>Clear</button>
+          <button onClick={() => setLines(lines + 1)}>add Lines</button>
+        </div>
       </div>
     </>
   )

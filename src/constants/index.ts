@@ -1,2 +1,5 @@
-export const isProd = import.meta.env.PROD
-export const isDev = import.meta.env.DEV
+export const IS_PROD = import.meta.env.PROD
+export const IS_DEV = import.meta.env.DEV
+
+// 移动端 锚点
+export const MOBILE_BREAKPOINT = 768

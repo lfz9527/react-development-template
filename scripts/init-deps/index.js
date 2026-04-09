@@ -1,7 +1,14 @@
 import { spawn } from 'child_process'
 import path from 'path'
 
-import { log, isDirExists, getDepTemplatePath, getAllSupportedDeps, formatPath, ROOT_DIR } from '../utils.js'
+import {
+  log,
+  isDirExists,
+  getDepTemplatePath,
+  getAllSupportedDeps,
+  formatPath,
+  ROOT_DIR,
+} from '../utils.js'
 
 const supportedDeps = getAllSupportedDeps()
 

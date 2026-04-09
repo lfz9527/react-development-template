@@ -1,5 +1,5 @@
 import { type StateCreator, type StoreMutatorIdentifier } from 'zustand'
-import { isProd } from '@/constants'
+import { IS_PROD } from '@/constants'
 
 type Logger = <
   T,
@@ -19,7 +19,7 @@ type LoggerImpl = <T>(
 type SetArgs = Parameters<Parameters<StateCreator<unknown, [], []>>[0]>
 
 function Log(name: string, get: () => any) {
-  if (isProd) return
+  if (IS_PROD) return
 
   const prefix = name ? `[${name}]` : '[store]'
   console.group(`%c${prefix} store updated`, 'color: #7f77dd; font-weight: 500')
@@ -33,8 +33,6 @@ const loggerImpl: LoggerImpl = (f, name) => (set, get, store) => {
     set(...(args as Parameters<typeof set>))
     Log(name ?? '', get)
   }
-
-  store.setState = loggedSet
   return f(loggedSet, get, store)
 }
 export const logger = loggerImpl as unknown as Logger

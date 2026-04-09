@@ -40,6 +40,9 @@ export default defineConfig([
       // 允许未使用的变量
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
+      'react-hooks/refs': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
   eslintPluginPrettierRecommended,

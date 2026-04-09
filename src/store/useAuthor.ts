@@ -10,7 +10,7 @@ type Action = {
   setToken: (token: State['token']) => void
 }
 
-export const useAuthor = create<State & Action>()(
+const useAuthor = create<State & Action>()(
   logger(
     devtools(
       persist(
@@ -29,3 +29,5 @@ export const useAuthor = create<State & Action>()(
     'useAuthor'
   )
 )
+
+export default useAuthor

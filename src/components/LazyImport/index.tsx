@@ -1,4 +1,5 @@
 import { Suspense, type ComponentType, type ReactNode } from 'react'
+import Loading from '@/components/Loading'
 
 const EmptyComponent = () => null
 
@@ -8,9 +9,16 @@ type LazyImportProps<P extends object = Global.anyObj> = {
   componentProps?: P
 }
 
-function LazyImport<P extends object>({
+function LazyImport<P extends Global.anyObj>({
   lazy,
-  fallback = 'loading...',
+  fallback = (
+    <Loading
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    />
+  ),
   componentProps,
 }: LazyImportProps<P>) {
   const Component = lazy || EmptyComponent
