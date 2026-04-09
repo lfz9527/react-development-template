@@ -3,13 +3,13 @@ import Loading from '@/components/Loading'
 
 const EmptyComponent = () => null
 
-type LazyImportProps<P extends object = Global.anyObj> = {
+type LazyImportProps<P extends object = Global.AnyObj> = {
   lazy?: ComponentType<P>
   fallback?: ReactNode
   componentProps?: P
 }
 
-function LazyImport<P extends Global.anyObj>({
+function LazyImport<P extends Global.AnyObj>({
   lazy,
   fallback = (
     <Loading

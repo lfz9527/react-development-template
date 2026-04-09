@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 import { cn } from '@/utils/common'
 
 import styles from './index.module.css'
-export type AutoTooltipProps = Global.elAttrs<HTMLDivElement> & {
+export type AutoTooltipProps = Global.ElAttrs<HTMLDivElement> & {
   text: string | number
   lines?: number
 }
