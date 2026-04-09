@@ -1,7 +1,14 @@
 import { useAuthor } from '@/store'
 import { useState } from 'react'
 
-import { useIsMobile, useDebounceValue, useEventListener } from '@/hooks'
+import AutoTooltip from '@/components/AutoTooltip'
+
+import {
+  useIsMobile,
+  useDebounceValue,
+  useEventListener,
+  useTimeout,
+} from '@/hooks'
 
 export default function App() {
   const isMobile = useIsMobile()
@@ -13,9 +20,13 @@ export default function App() {
     setInnerWidth(window.innerWidth)
   })
 
+  useTimeout(() => {
+    console.log('测试useTimeout')
+  })
   const handleClick = () => {
     setToken(token + Date.now().toString())
   }
+
   return (
     <>
       {isMobile ? '移动端' : '非移动端'}
@@ -32,6 +43,10 @@ export default function App() {
           <button onClick={() => setLines(lines + 1)}>add Lines</button>
         </div>
       </div>
+      <AutoTooltip
+        text={token}
+        lines={lines}
+      />
     </>
   )
 }

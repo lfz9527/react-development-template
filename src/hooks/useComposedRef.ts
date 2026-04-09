@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
+import { useLatest } from './useLatest'
 
 type RefCallback<T> = (node: T | null) => void
 type Ref<T> = RefCallback<T> | React.RefObject<T> | null | undefined
@@ -26,9 +27,10 @@ function setRef<T>(ref: Ref<T>, value: T | null) {
  * @returns 一个稳定的 callback ref（引用不随渲染变化），挂载/卸载时同步更新所有传入的 ref
  */
 export function useComposedRef<T>(...refs: Ref<T>[]): RefCallback<T> {
-  const storedRefs = useRef(refs)
-  storedRefs.current = refs
-  const callbackRef = useCallback(
+  const storedRefs = useLatest(refs)
+
+  return useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (node: T | null) => {
       for (const ref of storedRefs.current) {
         setRef(ref, node)
@@ -36,6 +38,4 @@ export function useComposedRef<T>(...refs: Ref<T>[]): RefCallback<T> {
     },
     [refs]
   )
-
-  return callbackRef
 }

@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react'
 
 import { useUnmount } from './useUnmount'
+import { useLatest } from './useLatest'
 
 export type UseDebounceFnReturn<T extends Global.AnyFunction> = {
   run: (...args: Parameters<T>) => void
@@ -26,8 +27,7 @@ export function useDebounceFn<T extends Global.AnyFunction>(
   options: UseDebounceFnOptions = {}
 ): UseDebounceFnReturn<T> {
   const { leading = false, trailing = true, delay = 300 } = options
-  const fnRef = useRef<T>(fn)
-  fnRef.current = fn
+  const fnRef = useLatest<T>(fn)
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastArgsRef = useRef<Parameters<T> | null>(null)
@@ -41,6 +41,8 @@ export function useDebounceFn<T extends Global.AnyFunction>(
     isLeadingCalledRef.current = false
     lastArgsRef.current = null
   }, [])
+
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const flush = useCallback(() => {
     if (timerRef.current && lastArgsRef.current) {
       clearTimeout(timerRef.current)
@@ -50,7 +52,9 @@ export function useDebounceFn<T extends Global.AnyFunction>(
       isLeadingCalledRef.current = false
     }
   }, [])
+
   const run = useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (...args: Parameters<T>) => {
       lastArgsRef.current = args
       // leading：第一次调用立即执行

@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+import { useLatest } from './useLatest'
 
 export function useUnmount(func: () => void) {
-  const funcRef = useRef(func)
-
-  funcRef.current = func
+  const funcRef = useLatest(func)
 
   useEffect(
     () => () => {
