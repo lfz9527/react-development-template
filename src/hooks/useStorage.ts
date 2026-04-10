@@ -77,6 +77,7 @@ export function useStorage<T>(props: UseStorageOption<T>): UseStorageReturn<T> {
     [deserializer, initialValue]
   )
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const readValue = useCallback((): T => {
     const initialValueToUse =
       initialValue instanceof Function ? initialValue() : initialValue
@@ -91,6 +92,7 @@ export function useStorage<T>(props: UseStorageOption<T>): UseStorageReturn<T> {
   }, [initialValue, key, deserializerFn])
 
   const setValue = useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (value) => {
       const newValue = value instanceof Function ? value(readValue()) : value
       Storage.current.setItem(key, serializerFn(newValue))
@@ -99,6 +101,7 @@ export function useStorage<T>(props: UseStorageOption<T>): UseStorageReturn<T> {
     [readValue, key, serializerFn]
   ) as SetValue<T>
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const remove = useCallback(() => {
     const defaultValue =
       initialValue instanceof Function ? initialValue() : initialValue

@@ -6,19 +6,26 @@ import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-
 const ignore = ['dist', 'node_modules', 'public', 'pnpm-lock.yaml', 'README.md']
 
 export default defineConfig([
   globalIgnores(ignore),
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{js}'],
+    extends: [js.configs.recommended, prettier],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.node,
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      prettier,
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -37,17 +44,6 @@ export default defineConfig([
       'react-hooks/exhaustive-deps': 'off',
       'react-hooks/preserve-manual-memoization': 'warn',
       'no-empty': 'off',
-      // '@typescript-eslint/indent': 'off',
-      // 'no-mixed-spaces-and-tabs': 'off',
-      // indent: 'off',
     },
   },
-  eslintPluginPrettierRecommended,
-  {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    rules: {
-      'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-    },
-  },
-  prettier,
 ])
