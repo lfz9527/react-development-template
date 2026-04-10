@@ -13,15 +13,7 @@ const ignore = ['dist', 'node_modules', 'public', 'pnpm-lock.yaml', 'README.md']
 export default defineConfig([
   globalIgnores(ignore),
   {
-    files: ['scripts/**/*.js'],
-    extends: [js.configs.recommended],
-    languageOptions: {
-      ecmaVersion: 2020, // 支持现代语法
-      globals: globals.node, // Node 全局变量识别：console, process, __dirname 等
-    },
-  },
-  {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx,js,jsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -44,16 +36,17 @@ export default defineConfig([
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/exhaustive-deps': 'off',
       'react-hooks/preserve-manual-memoization': 'warn',
+      'no-empty': 'off',
+      // '@typescript-eslint/indent': 'off',
+      // 'no-mixed-spaces-and-tabs': 'off',
+      // indent: 'off',
     },
   },
   eslintPluginPrettierRecommended,
   {
-    files: ['**/*.{ts,tsx,js}'],
+    files: ['**/*.{ts,tsx,js,jsx}'],
     rules: {
       'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-      indent: 'off',
-      '@typescript-eslint/indent': 'off',
-      'no-mixed-spaces-and-tabs': 'off',
     },
   },
   prettier,

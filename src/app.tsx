@@ -12,6 +12,8 @@ import {
   useCountdown,
 } from '@/hooks'
 
+import { Ping, GetUser } from '@/service'
+
 export default function App() {
   const isMobile = useIsMobile()
   const { token, setToken } = useAuthor()
@@ -36,8 +38,18 @@ export default function App() {
     setToken(token + Date.now().toString())
   }
 
+  const handleTestApi = async () => {
+    const { data } = await GetUser({ id: 12 })
+  }
+
   return (
-    <>
+    <div style={{ padding: 20 }}>
+      <button onClick={handleTestApi}>测试接口请求封装</button>
+      <div
+        style={{
+          paddingBlock: 10,
+        }}
+      />
       {isMobile ? '移动端' : '非移动端'}
       <p>window.innerWidth:{innerWidth}</p>
       <button onClick={start}>开始倒计时</button>
@@ -66,6 +78,6 @@ export default function App() {
         text={token}
         lines={lines}
       />
-    </>
+    </div>
   )
 }

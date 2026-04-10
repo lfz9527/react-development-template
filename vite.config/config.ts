@@ -30,7 +30,7 @@ const buildConfig = ({ mode, env }: Props): ReturnType<typeof defineConfig> => {
       port: 9529,
       proxy: {
         '/api': {
-          target: 'http://192.168.31.163:8003',
+          target: 'http://localhost:3000',
           changeOrigin: true,
         },
       },
