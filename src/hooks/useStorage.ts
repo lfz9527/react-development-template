@@ -14,10 +14,11 @@ type UseStorageReturn<T> = {
 type UseStorageOption<T> = {
   key: string
   storage?: 'session' | 'local'
+  /** 初始值，可以是值本身或返回该值的函数 */
   initialValue: T | (() => T)
-  // 反序列化存储值
+  /** 序列化函数 */
   deserializer?: (value: string) => T
-  // 序列化
+  /** 序列化 */
   serializer?: (value: T) => string
 }
 
@@ -25,7 +26,6 @@ const StorageMap = {
   session: window.sessionStorage,
   local: window.localStorage,
 }
-
 export function useStorage<T>(props: UseStorageOption<T>): UseStorageReturn<T> {
   const {
     key,
