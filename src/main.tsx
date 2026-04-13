@@ -2,20 +2,24 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import ErrorBoundary from '@/components/ErrorBoundary'
-import { GlobalCrash } from '@/components/ErrorBoundary/globalCrash'
+import GlobalCrash from '@/components/ErrorBoundary/GlobalCrash'
 import App from './app'
 import '@/styles/index.css'
 
 const root = createRoot(document.getElementById('root')!, {
   // 捕获 ErrorBoundary 内部的错误
-  onCaughtError: (error) => {
-    console.error('ErrorBoundary 内部的错误', error)
+  onCaughtError: (error, errorInfo) => {
+    console.group('[onCaughtError]')
+    console.error('error:', error)
+    console.error('componentStack:', errorInfo.componentStack)
+    console.groupEnd()
   },
   // 捕获未捕获的错误（全局错误）
-  onUncaughtError: (error: any) => {
-    console.error('React 崩溃', error)
-    // React 树已崩溃
-    root.render(<GlobalCrash error={error} />)
+  onUncaughtError: (error, errorInfo) => {
+    console.group('[onUncaughtError]')
+    console.error('error:', error)
+    console.error('componentStack:', errorInfo.componentStack)
+    console.groupEnd()
   },
   // 捕获可恢复的错误（不会崩溃）
   onRecoverableError: (error) => {

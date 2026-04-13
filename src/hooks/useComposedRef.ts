@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback } from 'react'
 import { useLatest } from './useLatest'
 
 type RefCallback<T> = (node: T | null) => void

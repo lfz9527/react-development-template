@@ -39,7 +39,7 @@ const WarningIcon = () => (
   </svg>
 )
 
-export const GlobalCrash = ({ error, errorInfo, reset }: GlobalCrashProps) => {
+const GlobalCrash = ({ error, errorInfo, reset }: GlobalCrashProps) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const handleRefresh = () => {
@@ -85,3 +85,5 @@ export const GlobalCrash = ({ error, errorInfo, reset }: GlobalCrashProps) => {
     </div>
   )
 }
+
+export default GlobalCrash
