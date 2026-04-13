@@ -12,7 +12,7 @@ export default defineConfig([
   globalIgnores(ignore),
   {
     files: ['**/*.{js}'],
-    extends: [js.configs.recommended, prettier],
+    extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.node,

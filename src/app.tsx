@@ -10,6 +10,7 @@ import {
   useTimeout,
   useStorage,
   useCountdown,
+  useThrottleFn,
 } from '@/hooks'
 
 import { Ping, GetUser } from '@/service'
@@ -30,6 +31,13 @@ export default function App() {
   useEventListener('resize', () => {
     setInnerWidth(window.innerWidth)
   })
+
+  const ThrottleRun = useThrottleFn(
+    (args) => {
+      console.log('args', args)
+    },
+    { wait: 2000 }
+  )
 
   useTimeout(() => {
     console.log('测试useTimeout')
@@ -72,6 +80,14 @@ export default function App() {
         >
           <button onClick={handleClick}>Click me</button>
           <button onClick={() => setLines(lines + 1)}>add Lines</button>
+          <button
+            onClick={() => {
+              console.log(1)
+              ThrottleRun(Date.now())
+            }}
+          >
+            防抖
+          </button>
         </div>
       </div>
       <AutoTooltip
