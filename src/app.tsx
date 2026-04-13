@@ -50,6 +50,8 @@ export default function App() {
     const { data } = await GetUser({ id: 12 })
   }
 
+  throw new Error('test: ErrorBoundary 是否工作')
+
   return (
     <div style={{ padding: 20 }}>
       <button onClick={handleTestApi}>测试接口请求封装</button>

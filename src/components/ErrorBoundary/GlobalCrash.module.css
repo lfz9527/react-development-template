@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #f5f4ed;
+}
+
+.card {
+  width: 100%;
+  max-width: 680px;
+  padding: 2.5rem 2rem;
+  border: 0.5px solid rgb(31 30 29 / 15%);
+  border-radius: 10px;
+  background: white;
+  text-align: center;
+}
+
+.iconWrap {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 1.25rem;
+  background: rgb(247 236 236);
+  color: rgb(127 44 40);
+}
+
+.title {
+  margin: 0 0 8px;
+  color: rgb(20 20 19);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.desc {
+  margin: 0 0 1.5rem;
+  color: rgb(61 61 58);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.errorBox {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  background: rgb(245 244 237);
+  text-align: left;
+}
+
+.errorLabel {
+  margin: 0 0 4px;
+  color: rgb(115 114 108);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.errorMessage {
+  margin: 0;
+  color: rgb(127 44 40);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.actions button {
+  height: 34px;
+  padding: 0 16px;
+  border: 0.5px solid rgb(31 30 29 / 30%);
+  border-radius: 8px;
+  background: transparent;
+  color: rgb(20 20 19);
+  cursor: pointer;
+  font-size: 13px;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.actions button:hover {
+  background: rgb(245 244 237);
+}
+
+.stackBox {
+  max-height: 200px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1.25rem;
+  background: rgb(245 244 237);
+  overflow-y: auto;
+  text-align: left;
+}
+
+.stackText {
+  margin: 0;
+  color: rgb(61 61 58);
+  font-size: 11px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
