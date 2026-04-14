@@ -9,8 +9,6 @@ export function buildRouter(routes: AppRouteObject[]): RouteObject[] {
   const convert = (route: AppRouteObject): RouteObject | null => {
     const { envs, meta = {}, children, index, ...args } = route
 
-    console.log(111, envs, curEnv)
-
     if (envs && envs.length > 0 && !envs.includes(curEnv)) {
       return null
     }

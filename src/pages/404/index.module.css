@@ -1,0 +1,285 @@
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(500%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  animation: fadeup 0.5s ease both;
+  background-color: var(--color-bg, #fff);
+  text-align: center;
+}
+
+/* ─── Art / number row ───────────────────────────────────── */
+.artWrap {
+  margin-bottom: 2rem;
+  animation: float 3.6s ease-in-out infinite;
+}
+
+.numRow {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.digit {
+  color: var(--color-text-primary, #111);
+  font-size: clamp(72px, 13vw, 128px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -3px;
+}
+
+/* ─── CRT screen (the zero) ──────────────────────────────── */
+.screen {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: clamp(72px, 13vw, 128px);
+  height: clamp(72px, 13vw, 128px);
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #534ab7;
+  border-radius: 14px;
+  background: #0d0d14;
+  gap: 8px;
+}
+
+/* horizontal scanline sweep */
+.scanline {
+  position: absolute;
+  height: 28%;
+  animation: scanline 2.6s linear infinite;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(127 119 221 / 6%),
+    transparent
+  );
+  inset: 0;
+  pointer-events: none;
+}
+
+/* pixel grid overlay */
+.screen::after {
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 12%) 0,
+    rgb(0 0 0 / 12%) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  content: '';
+  inset: 0;
+  pointer-events: none;
+}
+
+.eyeRow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: clamp(10px, 2vw, 20px);
+}
+
+.eye {
+  width: clamp(9px, 1.6vw, 14px);
+  height: clamp(9px, 1.6vw, 14px);
+  border-radius: 50%;
+  animation: blink 4s ease-in-out infinite;
+  background: #afa9ec;
+}
+
+.eye:last-child {
+  animation-delay: 0.08s;
+}
+
+.mouth {
+  position: relative;
+  z-index: 1;
+  width: clamp(20px, 3.5vw, 32px);
+  height: clamp(9px, 1.5vw, 14px);
+  border-radius: 0 0 999px 999px;
+  border-right: 2px solid transparent;
+  border-bottom: 3px solid #afa9ec;
+  border-left: 2px solid transparent;
+}
+
+/* ─── Path badge ─────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+  font-size: 12px;
+  gap: 6px;
+  word-break: break-all;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e24b4a;
+}
+
+/* ─── Text ───────────────────────────────────────────────── */
+.headline {
+  margin: 0 0 0.5rem;
+  color: var(--color-text-primary, #111);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 600;
+}
+
+.sub {
+  max-width: 360px;
+  margin: 0 0 2rem;
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+.btnGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btnPrimary {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.btnPrimary:hover {
+  opacity: 0.75;
+}
+
+.btnPrimary:active {
+  opacity: 0.6;
+}
+
+.btnGhost {
+  padding: 9px 22px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.btnGhost:hover {
+  background: #f9fafb;
+}
+
+.btnGhost:active {
+  background: #f3f4f6;
+}
+
+/* ─── Dark mode ──────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #0c0c0e;
+  }
+
+  .digit {
+    color: #f0f0f0;
+  }
+
+  .headline {
+    color: #f0f0f0;
+  }
+
+  .sub {
+    color: #9ca3af;
+  }
+
+  .badge {
+    border-color: #2e2e3a;
+    background: #1c1c22;
+    color: #9ca3af;
+  }
+
+  .btnPrimary {
+    background: #f0f0f0;
+    color: #0c0c0e;
+  }
+
+  .btnGhost {
+    border-color: #374151;
+    color: #f0f0f0;
+  }
+
+  .btnGhost:hover {
+    background: #1c1c22;
+  }
+
+  .btnGhost:active {
+    background: #252530;
+  }
+}
