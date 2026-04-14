@@ -1,4 +1,6 @@
-export type RouteMeta = {
+import type { RouteObject } from 'react-router'
+
+export type RouteMeta = RouteObject['handle'] & {
   /**
    * 页面标题
    */
@@ -7,4 +9,10 @@ export type RouteMeta = {
    * 环境列表
    */
   env?: string[]
+}
+
+export type AppRouteObject = RouteObject & {
+  meta?: RouteMeta
+  children?: AppRouteObject[]
+  envs?: string[]
 }

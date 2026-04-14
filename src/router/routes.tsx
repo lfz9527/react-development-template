@@ -1,18 +1,23 @@
-import type { RouteObject } from 'react-router'
-import type { RouteMeta } from './types'
-
-import NotFound from '@/pages/404'
-
-export type AppRouteObject = RouteObject & {
-  meta?: RouteMeta
-  children?: AppRouteObject[]
-}
+import type { AppRouteObject } from './types'
+import LazyImport from '@/components/LazyImport'
+import BasicGuard from './guards/BasicGuard'
 
 const routes: AppRouteObject[] = [
   {
-    path: '*',
-    element: <NotFound />,
-    meta: { title: '页面不存在' },
+    element: <BasicGuard />,
+    children: [
+      {
+        path: '/login',
+        element: <LazyImport lazy={() => import('@/pages/login')} />,
+        meta: { title: '登陆' },
+        envs: ['prod'],
+      },
+      {
+        path: '*',
+        element: <LazyImport lazy={() => import('@/pages/404')} />,
+        meta: { title: '404' },
+      },
+    ],
   },
 ]
 
