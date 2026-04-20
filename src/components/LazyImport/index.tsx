@@ -1,23 +1,15 @@
-import {
-  Suspense,
-  useMemo,
-  lazy as reactLazy,
-  type ComponentType,
-  type ReactNode,
-} from 'react'
+import { Suspense, type ComponentType, type ReactNode, lazy } from 'react'
 import Loading from '@/components/Loading'
 
-type LazyFactory = () => Promise<{ default: React.ComponentType<any> }>
-const EmptyComponent = () => null
+type Module = Promise<{ default: ComponentType<any> }>
 
-type LazyImportProps<P extends object = Global.AnyObj> = {
-  lazy?: ComponentType<P> | LazyFactory
+type LazyImportProps = {
+  children: ReactNode
   fallback?: ReactNode
-  componentProps?: P
 }
 
-function LazyImport<P extends Global.AnyObj>({
-  lazy,
+function LazyImport({
+  children,
   fallback = (
     <Loading
       style={{
@@ -26,22 +18,17 @@ function LazyImport<P extends Global.AnyObj>({
       }}
     />
   ),
-  componentProps,
-}: LazyImportProps<P>) {
-  const Component = useMemo(() => {
-    if (!lazy) return EmptyComponent
-
-    if (typeof lazy === 'function' && !('prototype' in lazy)) {
-      return reactLazy(lazy as LazyFactory)
-    }
-    return lazy as React.ComponentType<P>
-  }, [lazy])
-
-  return (
-    <Suspense fallback={fallback}>
-      <Component {...(componentProps as P)} />
-    </Suspense>
-  )
+}: LazyImportProps) {
+  return <Suspense fallback={fallback}>{children}</Suspense>
 }
 
 export default LazyImport
+
+export function Lazy(factory: () => Module) {
+  const Component = lazy(factory)
+  return (
+    <LazyImport>
+      <Component />
+    </LazyImport>
+  )
+}

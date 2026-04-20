@@ -1,5 +1,5 @@
 import type { AppRouteObject } from './types'
-import LazyImport from '@/components/LazyImport'
+import { Lazy } from '@/components/LazyImport'
 import BasicGuard from './guards/BasicGuard'
 
 const routes: AppRouteObject[] = [
@@ -8,22 +8,22 @@ const routes: AppRouteObject[] = [
     children: [
       {
         path: '/',
-        element: <LazyImport lazy={() => import('@/pages/home')} />,
+        element: Lazy(() => import('@/pages/home')),
         meta: { title: '首页' },
       },
       {
         path: '/login',
-        element: <LazyImport lazy={() => import('@/pages/login')} />,
+        element: Lazy(() => import('@/pages/login')),
         meta: { title: '登陆' },
       },
       {
         path: '/404',
-        element: <LazyImport lazy={() => import('@/pages/404')} />,
+        element: Lazy(() => import('@/pages/404')),
         meta: { title: '404' },
       },
       {
         path: '*',
-        element: <LazyImport lazy={() => import('@/pages/404')} />,
+        element: Lazy(() => import('@/pages/404')),
         meta: { title: '404' },
       },
     ],
