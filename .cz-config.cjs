@@ -4,6 +4,7 @@ module.exports = {
     { value: 'feat', name: '✨ feat: 新增功能 (Feature)' },
     { value: 'fix', name: '🐛 fix: 修复缺陷 (Bugfix)' },
     { value: 'ui', name: '💄 ui: 更新UI界面或样式' },
+    { value: 'util', name: '🔧 util: 工具函数/hooks/公共模块' },
     {
       value: 'style',
       name: '🎨 style: 代码格式 (不影响逻辑的空格、格式化等)',
