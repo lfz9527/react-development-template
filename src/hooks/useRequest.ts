@@ -79,14 +79,6 @@ export function useRequest<TData, TParams extends any[]>(
   const onErrorRef = useLatest(onError)
   const onFinallyRef = useLatest(onFinally)
 
-  useEffect(() => {
-    unmountedRef.current = false
-    return () => {
-      unmountedRef.current = true
-      abortRef.current?.abort()
-    }
-  }, [])
-
   const runAsync = useCallback(
     async (...args: TParams): Promise<TData> => {
       abortRef.current?.abort()
@@ -156,6 +148,14 @@ export function useRequest<TData, TParams extends any[]>(
     abortRef.current?.abort()
     if (!unmountedRef.current) setLoading(false)
   }, [])
+
+  useEffect(() => {
+    unmountedRef.current = false
+    return () => {
+      unmountedRef.current = true
+      cancel()
+    }
+  }, [cancel])
 
   // ── mutate ────────────────────────────────────────────────
   const mutate = useCallback(
