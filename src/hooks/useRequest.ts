@@ -7,7 +7,7 @@ import { useLatest } from './useLatest'
 import { useDebounceFn } from './useDebounceFn'
 
 export type ServiceFn<TData, TParams extends unknown[]> = (
-  ...args: TParams
+  ...args: [...TParams, AbortSignal?]
 ) => Promise<BusResponse<TData>>
 
 type UseRequestResult<TData, TParams extends unknown[]> = {
@@ -99,7 +99,7 @@ export function useRequest<TData, TParams extends any[]>(
         setError(undefined)
       }
       try {
-        const result = await service(...args)
+        const result = await service(...args, abortRef.current.signal)
 
         if (!unmountedRef.current) {
           setData(result.data)
