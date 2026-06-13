@@ -5,11 +5,8 @@ import { compression } from 'vite-plugin-compression2'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { visualizer } from 'rollup-plugin-visualizer'
 import stylelint from 'vite-plugin-stylelint'
-import Icons from 'unplugin-icons/vite'
-import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import { createIconsPlugin } from './icons'
 import type { ImportMetaEnv } from '../src/types/env'
-
-const defaultIconSize = 24
 
 type Props = {
   mode: ConfigEnv['mode']
@@ -24,27 +21,7 @@ export const buildPlugins = ({ env, isBuild }: Props) => {
 
   const plugins: PluginOption[] = [
     react(),
-    Icons({
-      compiler: 'jsx',
-      jsx: 'react',
-      customCollections: {
-        'local-icons': FileSystemIconLoader(
-          path.resolve(__dirname, '../src/assets/icon'),
-          (svg) =>
-            svg
-              // 替换或添加 fill
-              .replace(/fill=".*?"/, 'fill="currentColor"')
-              .replace(/width=".*?"/, `width="${defaultIconSize}"`)
-              .replace(/height=".*?"/, `height="${defaultIconSize}"`)
-              // width/height/fill，则添加
-              .replace(/^<svg/, (match) =>
-                match.includes('width')
-                  ? match
-                  : '<svg width="32" height="32" fill="currentColor"'
-              )
-        ),
-      },
-    }),
+    createIconsPlugin(path.resolve(__dirname, '../src/assets/icon')),
     stylelint({
       fix: true, // 开启自动修复
       include: ['**/*.{css,scss,less}'], // 仅检查样式文件
