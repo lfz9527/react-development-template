@@ -1,26 +1,29 @@
 import { isPackageExists } from 'local-pkg'
 import { execSync } from 'node:child_process'
-import fs from 'fs'
+import fs from 'node:fs'
+import path from 'node:path'
 
 import {
   needInstallDeps,
   getTwConfPath,
   cssIns,
   postcssConfig,
-} from './template.js'
+} from './template.ts'
 import {
   log,
   ROOT_DIR,
   formatPath,
   isFileExists,
   readExecutableFile,
-} from '../../../utils.js'
+} from '../../../utils.ts'
 
-import { importCssToMain, cssInstPath } from '../utils.js'
+import { importCssToMain, cssInstPath } from '../utils.ts'
 
-import path from 'node:path'
-
-const payload = JSON.parse(process.env.INIT_PAYLOAD)
+const payload = JSON.parse(process.env.INIT_PAYLOAD!) as {
+  templateDir: string
+  dependent: string
+  version: string
+}
 const { templateDir, dependent, version } = payload
 
 export default async function main() {
@@ -40,11 +43,8 @@ export default async function main() {
 }
 main()
 
-/**
- * 下载相关依赖
- */
 function install() {
-  log.title(`🚀 开始下载相关依赖`)
+  log.title('🚀 开始下载相关依赖')
   needInstallDeps.forEach((v) => {
     if (isPackageExists(v.name)) {
       log.success(`${v.name} 已安装`)
@@ -55,39 +55,27 @@ function install() {
   })
 }
 
-/**
- * 初始化 tailwind.config.js 文件
- * @param {string} twConfPath
- * @returns
- */
-function initTwConf({ twConfPath }) {
-  log.title(`🚀 初始化 tailwind.config.js 文件`)
+function initTwConf({ twConfPath }: { twConfPath: string }) {
+  log.title('🚀 初始化 tailwind.config.js 文件')
   if (isFileExists(twConfPath)) {
-    log.success(`tailwind.config.js 已存在`)
+    log.success('tailwind.config.js 已存在')
   } else {
-    log.info(`[➤] tailwind.config.js 不存在，尝试创建...`)
+    log.info('[➤] tailwind.config.js 不存在，尝试创建...')
     execSync(`npx ${dependent} init`, { stdio: 'inherit' })
-    log.success(`tailwind.config.js 创建成功`)
+    log.success('tailwind.config.js 创建成功')
   }
 }
 
-/**
- * 修改 tailwind.config.js 文件
- * @param {string} twConfPath
- * @returns
- */
-async function modifyTwConfig({ twConfPath }) {
+async function modifyTwConfig({ twConfPath }: { twConfPath: string }) {
   try {
     const mod = await readExecutableFile(twConfPath)
     if (!mod) {
-      // 假设 initTwConf 已定义
       initTwConf({ twConfPath })
       return
     }
-    log.title(`🚀 修改 tailwind.config.js 文件`)
+    log.title('🚀 修改 tailwind.config.js 文件')
 
-    // 获取配置对象
-    const config = mod.default
+    const config = mod.default as { content?: string[] }
     const content = config?.content ?? []
     const contentPath = './src/**/*.{ts,tsx}'
 
@@ -102,30 +90,24 @@ async function modifyTwConfig({ twConfPath }) {
     const configTemplate = `/** @type {import('tailwindcss').Config} */
        export default ${JSON.stringify(config, null, 2)};
     `
-    // 写入文件
     fs.writeFileSync(twConfPath, configTemplate, 'utf-8')
-    log.success(`tailwind.config.js 修改成功`)
+    log.success('tailwind.config.js 修改成功')
   } catch (error) {
-    console.error('tailwind.config.js 修改失败', error)
+    log.error('tailwind.config.js 修改失败', error)
   }
 }
 
-/**
- * 修改 postcss.config.js 文件
- * @param {string} twConfPath
- * @returns
- */
 function modifyPostcssConfig() {
   try {
     const filePath = path.join(ROOT_DIR, 'postcss.config.js')
     if (isFileExists(filePath)) {
       return
     }
-    log.title(`🚀 新增 postcss.config.js 文件`)
+    log.title('🚀 新增 postcss.config.js 文件')
     fs.writeFileSync(filePath, postcssConfig, 'utf-8')
-    log.success(`postcss.config.js 修改成功`)
+    log.success('postcss.config.js 修改成功')
   } catch (error) {
-    console.error('postcss.config.js 修改失败', error)
+    log.error('postcss.config.js 修改失败', error)
   }
 }
 

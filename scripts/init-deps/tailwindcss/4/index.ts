@@ -1,7 +1,8 @@
 import { isPackageExists } from 'local-pkg'
-import fs from 'fs'
+import fs from 'node:fs'
 import { Project, SyntaxKind } from 'ts-morph'
 import { execSync } from 'node:child_process'
+import path from 'node:path'
 
 import {
   log,
@@ -9,15 +10,17 @@ import {
   formatPath,
   ensureImport,
   isFileExists,
-} from '../../../utils.js'
+} from '../../../utils.ts'
 
-import { importCssToMain, cssInstPath } from '../utils.js'
+import { importCssToMain, cssInstPath } from '../utils.ts'
 
-import { needInstallDeps, cssIns, viteConfigPath } from './template.js'
+import { needInstallDeps, cssIns, viteConfigPath } from './template.ts'
 
-import path from 'node:path'
-
-const payload = JSON.parse(process.env.INIT_PAYLOAD)
+const payload = JSON.parse(process.env.INIT_PAYLOAD!) as {
+  templateDir: string
+  dependent: string
+  version: string
+}
 const { templateDir, dependent, version } = payload
 
 export default async function main() {
@@ -25,7 +28,7 @@ export default async function main() {
   log.info(`当前模板目录: ${formatPath(templateDir)}`)
 
   install()
-  useVitePlugin()
+  addVitePlugin()
   addTailwindCss()
   importCssToMain()
   execSync('pnpm lint:fix', { stdio: 'inherit' })
@@ -33,7 +36,7 @@ export default async function main() {
 main()
 
 function install() {
-  log.title(`🚀 开始下载相关依赖`)
+  log.title('🚀 开始下载相关依赖')
   needInstallDeps.forEach((v) => {
     if (isPackageExists(v.name)) {
       log.success(`${v.name} 已安装`)
@@ -44,15 +47,14 @@ function install() {
   })
 }
 
-function useVitePlugin() {
-  log.title(`🚀 添加 vite 插件 tailwindcss`)
+function addVitePlugin() {
+  log.title('🚀 添加 vite 插件 tailwindcss')
 
   const vConfPath = path.join(ROOT_DIR, viteConfigPath)
   const project = new Project()
   const sourceVConf = project.addSourceFileAtPath(vConfPath)
 
   try {
-    // 找到 plugins 变量
     const pluginsVar = sourceVConf
       .getDescendantsOfKind(SyntaxKind.VariableDeclaration)
       .find((v) => v.getName() === 'plugins')
@@ -61,12 +63,10 @@ function useVitePlugin() {
       throw new Error('没找到 plugins 变量')
     }
 
-    // 拿到数组
     const pluginsArr = pluginsVar.getInitializerIfKindOrThrow(
       SyntaxKind.ArrayLiteralExpression
     )
 
-    // 判断是否已有 tailwindcss()
     const hasTailwind = pluginsArr
       .getDescendantsOfKind(SyntaxKind.CallExpression)
       .some((call) => call.getExpression().getText() === 'tailwindcss')
@@ -85,7 +85,7 @@ function useVitePlugin() {
     sourceVConf.saveSync()
     log.success('添加 tailwindcss vite 插件成功')
   } catch (error) {
-    log.error(`添加 tailwindcss 失败`, error)
+    log.error('添加 tailwindcss 失败', error)
   }
 }
 

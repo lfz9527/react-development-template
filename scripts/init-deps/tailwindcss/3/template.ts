@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 
 export const cssIns = `@tailwind base;
 @tailwind components;
@@ -15,12 +15,7 @@ export default {
 }
 `
 
-/**
- * 获取 tailwind.config.js 路径
- * @param {string} rootDir 根目录
- * @returns {string} tailwind.config.js 路径
- */
-export const getTwConfPath = (rootDir) => {
+export const getTwConfPath = (rootDir: string) => {
   return path.join(rootDir, 'tailwind.config.js')
 }
 
@@ -28,7 +23,7 @@ export const needInstallDeps = [
   {
     name: 'tailwindcss',
     install: false,
-    command(name, version) {
+    command(name: string, version: string) {
       return `pnpm add -D ${name}@${version}`
     },
   },
@@ -36,14 +31,14 @@ export const needInstallDeps = [
     name: 'postcss',
     install: false,
     command() {
-      return `pnpm add -D postcss`
+      return 'pnpm add -D postcss'
     },
   },
   {
     name: 'autoprefixer',
     install: false,
     command() {
-      return `pnpm add -D autoprefixer`
+      return 'pnpm add -D autoprefixer'
     },
   },
 ]

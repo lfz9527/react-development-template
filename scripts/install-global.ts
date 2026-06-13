@@ -1,12 +1,10 @@
 import { execSync } from 'node:child_process'
-import { log } from './utils'
+import { log } from './utils.ts'
 
-// 需要全局安装的工具列表
 const packages = ['rimraf']
 
 packages.forEach((pkg) => {
   try {
-    // 检查是否已全局安装
     const version = execSync(`${pkg} --version`, { stdio: 'pipe' })
       .toString()
       .trim()

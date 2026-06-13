@@ -14,15 +14,15 @@ export const needInstallDeps = [
   {
     name: 'tailwindcss',
     install: false,
-    command(name) {
+    command(name: string, _version: string) {
       return `pnpm add ${name}`
     },
   },
   {
     name: '@tailwindcss/vite',
     install: false,
-    command() {
-      return `pnpm add @tailwindcss/vite`
+    command(_name: string, _version: string) {
+      return 'pnpm add @tailwindcss/vite'
     },
   },
 ]

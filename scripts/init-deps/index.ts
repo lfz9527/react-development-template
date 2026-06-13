@@ -1,5 +1,5 @@
-import { spawn } from 'child_process'
-import path from 'path'
+import { spawn } from 'node:child_process'
+import path from 'node:path'
 
 import {
   log,
@@ -8,11 +8,11 @@ import {
   getAllSupportedDeps,
   formatPath,
   ROOT_DIR,
-} from '../utils.js'
+} from '../utils.ts'
 
 const supportedDeps = getAllSupportedDeps()
 
-function validateDepVersion(dependentName, version) {
+function validateDepVersion(dependentName: string, version: string) {
   const depPath = getDepTemplatePath(dependentName)
   const depVersionPath = getDepTemplatePath(`${dependentName}/${version}`)
 
@@ -35,7 +35,6 @@ function validateDepVersion(dependentName, version) {
   }
 }
 
-// 解析脚本 携带参数
 function parseArgs() {
   const [dependent, version] = process.argv.slice(2)
   if (!dependent || !version) {
@@ -46,38 +45,16 @@ function parseArgs() {
   return { dependent, version: version.replace(/v/gi, '').trim() }
 }
 
-async function main() {
-  const { dependent, version } = parseArgs()
-  const { templateDir } = validateDepVersion(dependent, version)
-
-  log.title(`🚀 初始化: ${dependent} [${version}]`)
-  log.info(`模板目录: ${formatPath(templateDir)}`)
-  console.log()
-
-  const scriptPath = path.join(templateDir, 'index.js')
-
-  await runScript(scriptPath, {
-    templateDir,
-    dependent,
-    version,
-  })
-}
-main()
-
-async function runScript(scriptPath, envVars) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(
-      process.execPath, // 当前 node 路径
-      [scriptPath],
-      {
-        cwd: ROOT_DIR, // ← 关键：工作目录设为主项目根
-        stdio: 'inherit', // 共享 stdin/stdout/stderr
-        env: {
-          ...process.env,
-          INIT_PAYLOAD: JSON.stringify(envVars), // 参数通过环境变量传递
-        },
-      }
-    )
+async function runScript(scriptPath: string, envVars: Record<string, unknown>) {
+  return new Promise<void>((resolve, reject) => {
+    const child = spawn('npx', ['tsx', scriptPath], {
+      cwd: ROOT_DIR,
+      stdio: 'inherit',
+      env: {
+        ...process.env,
+        INIT_PAYLOAD: JSON.stringify(envVars),
+      },
+    })
 
     child.on('close', (code) => {
       if (code === 0) resolve()
@@ -87,3 +64,21 @@ async function runScript(scriptPath, envVars) {
     child.on('error', reject)
   })
 }
+
+async function main() {
+  const { dependent, version } = parseArgs()
+  const { templateDir } = validateDepVersion(dependent, version)
+
+  log.title(`🚀 初始化: ${dependent} [${version}]`)
+  log.info(`模板目录: ${formatPath(templateDir)}`)
+  console.log()
+
+  const scriptPath = path.join(templateDir, 'index.ts')
+
+  await runScript(scriptPath, {
+    templateDir,
+    dependent,
+    version,
+  })
+}
+main()

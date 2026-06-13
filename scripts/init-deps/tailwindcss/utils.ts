@@ -1,7 +1,7 @@
 import { Project } from 'ts-morph'
-import path from 'path'
+import path from 'node:path'
 
-import { log, ROOT_DIR, ensureImport } from '../../utils.js'
+import { log, ROOT_DIR, ensureImport } from '../../utils.ts'
 
 export const cssInstPath = 'src/styles/tailwind.css'
 
