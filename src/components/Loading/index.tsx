@@ -9,8 +9,8 @@ type Props = Global.ElAttrs<HTMLDivElement> & {
 export default function Loading({ className, size = 24, ...props }: Props) {
   return (
     <div
+      role='status'
       className={cn(styles['loading'], className)}
-      style={{}}
       {...props}
     >
       <LoadingSvg

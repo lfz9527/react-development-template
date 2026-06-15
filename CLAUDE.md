@@ -14,11 +14,22 @@ pnpm build            # tsc 类型检查 + vite 构建
 pnpm lint             # ESLint 检查
 pnpm lint:fix         # ESLint 自动修复
 pnpm format           # Prettier 格式化
+pnpm test             # 运行所有测试 (vitest run)
+pnpm test:watch       # 监听模式运行测试
 pnpm preview          # 预览生产构建
 pnpm commit           # 使用 commitizen 交互式提交
+pnpm init-dep <name> <version>  # 按模板初始化可选依赖（如 tailwindcss）
 pnpm globalInstall    # 安装全局工具 (如 rimraf)
 pnpm clean            # 删除 node_modules 和 lock 文件
 ```
+
+## 测试体系
+
+- 测试框架: Vitest 4 + jsdom + `@testing-library/react`（v16）
+- `globals: true` — `describe`/`it`/`expect`/`vi` 全局可用，无需 import
+- setup 文件 (`src/test/setup.ts`) 只做一件事: 加载 `@testing-library/jest-dom/vitest`（提供 `toBeInTheDocument()` 等 DOM 匹配器）
+- 测试文件统一放在根目录 `test/` 下，按 `hooks/`、`components/` 分类
+- 异步时序测试大量使用 `vi.useFakeTimers()` + `vi.advanceTimersByTimeAsync()` 模式
 
 ## 架构概览
 
@@ -68,9 +79,19 @@ createRoot → StrictMode → ErrorBoundary(GlobalCrash) → App
 
 17 个通用 hooks 统一从 `@/hooks` 导出，包含: `useBoolean`, `useCounter`, `useCountdown`, `useDebounceFn`, `useDebounceValue`, `useDocumentTitle`, `useErrorBoundary`, `useEventListener`, `useInterval`, `useIsMobile`, `useLatest`, `useRequest`, `useScrollLock`, `useStorage`, `useThrottledFn`, `useTimeout`, `useUnmount`, `useComposedRef`。
 
+**核心模式 — `useLatest`**: 几乎所有 hooks 的基石。用 `useRef` 存储传入值，每帧更新 `ref.current`，从而在闭包中始终读取最新值。这使得 hooks 可以安全地省略回调依赖，避免 `exhaustive-deps` 误报。
+
+**`useRequest`**: 全功能异步请求 hook。自动管理 `AbortController`（新请求自动取消旧请求），防卸载后 setState，支持 `immediate`/`debounceWait`/`mutate`/`refresh`/`cancel`。回调（`onSuccess`/`onError`）存储在 `useLatest` ref 中以避免重建 `runAsync`。
+
 ### 状态管理
 
 项目安装了 Zustand 5，stores 目录为空，按需在 `src/stores/` 下创建。
+
+**Store 模式**: 参考 `src/store/useAuthor.ts` — 三层中间件包裹：
+
+1. 内层 `persist` — 持久化到 `sessionStorage`
+2. 中层 `devtools` — Redux DevTools 集成
+3. 外层自定义 `logger` — 开发环境自动打印状态变更日志
 
 ### Vite 配置
 
@@ -79,6 +100,30 @@ createRoot → StrictMode → ErrorBoundary(GlobalCrash) → App
 - **构建输出**: `dist/{mode}_{version}/`（如 `dist/production_0.0.0/`）
 - **插件**: React、unplugin-icons（本地 SVG → React 组件）、stylelint（自动修复）、env-parse（从 `.env` 自动生成 `src/types/env.d.ts`）、gzip 压缩、构建分析（`VITE_BUILD_ANALYZE=true` 时开启）
 - **Sourcemap**: 通过 `VITE_BUILD_SOURCEMAP` 环境变量控制
+
+### 自定义图标
+
+unplugin-icons 配置了 `local-icons` 自定义集合，从 `src/assets/icon/` 加载 SVG。使用方式：
+
+```tsx
+import LoadingSvg from '~icons/local-icons/loading'
+// 渲染为 React 组件，fill 自动映射为 currentColor，默认尺寸 24x24
+```
+
+### 依赖初始化系统
+
+`scripts/init-deps/` 提供可选依赖的自动化安装模板，通过 `ts-morph` 做 AST 级别的代码注入：
+
+```bash
+pnpm init-dep tailwindcss 3   # 安装 Tailwind CSS v3
+pnpm init-dep tailwindcss 4   # 安装 Tailwind CSS v4
+```
+
+目前仅支持 Tailwind CSS 模板，每个版本对应独立的初始化脚本（配置修改 + 代码模板注入）。
+
+### Tailwind CSS
+
+项目未预装 Tailwind，但已就绪：`prettier-plugin-tailwindcss` 和 `stylelint-config-tailwindcss` 已在 devDependencies 中。需要时通过 `pnpm init-dep tailwindcss <version>` 安装。
 
 ### Git 提交规范
 

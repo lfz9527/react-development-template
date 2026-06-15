@@ -11,6 +11,8 @@
     "lint-stylelint": "stylelint \"**/*.{css,scss,less}\"",
     "lint-stylelint:fix": "stylelint \"**/*.{css,scss,less}\" --fix",
     "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "vite preview",
     "prepare": "husky",
     "commit": "git add . && git-cz",
@@ -57,6 +59,9 @@
     "@eslint/js": "^9.39.4",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -70,6 +75,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
+    "jsdom": "^29.1.1",
     "lint-staged": "^16.4.0",
     "local-pkg": "^1.1.2",
     "prettier": "^3.8.1",
@@ -87,6 +93,7 @@
     "vite": "^8.0.1",
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-env-parse": "^1.0.15",
-    "vite-plugin-stylelint": "^6.1.0"
+    "vite-plugin-stylelint": "^6.1.0",
+    "vitest": "^4.1.8"
   }
 }
