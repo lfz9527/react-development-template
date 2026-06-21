@@ -11,6 +11,7 @@
 | 构建 | Vite (rolldown) | ^8.0 |
 | 路由 | React Router | ^7.14 |
 | 状态管理 | Zustand | ^5.0 |
+| CSS | Tailwind CSS | ^4.3 |
 | 包管理 | pnpm | - |
 
 ## 快速开始
@@ -50,12 +51,12 @@ src/
 ├── main.tsx              # 应用入口
 ├── assets/               # 静态资源
 ├── components/           # 通用组件
-│   ├── ErrorBoundary.tsx # 错误边界 (class 组件)
-│   ├── LazyImport.tsx    # 懒加载 + Suspense 包装
-│   ├── Loading.tsx       # SVG 加载动画
-│   ├── Access.tsx        # 条件渲染
-│   └── AutoTooltip.tsx   # 文本溢出提示
-├── hooks/                # 通用 hooks (17 个)
+│   ├── ErrorBoundary/    # 错误边界 (class 组件, 含 RouteErrorBoundary 等)
+│   ├── LazyImport/       # 懒加载 + Suspense 包装
+│   ├── Loading/          # SVG 加载动画
+│   ├── Access/           # 条件渲染
+│   └── AutoTooltip/      # 文本溢出提示
+├── hooks/                # 通用 hooks (19 个)
 ├── pages/                # 页面组件
 ├── router/               # 路由配置
 │   ├── routes.tsx        # 路由定义
@@ -65,7 +66,7 @@ src/
 │   ├── HttpClient.ts     # HTTP 客户端核心
 │   ├── request.ts        # 预置实例
 │   └── index.ts          # 业务 API
-├── stores/               # Zustand stores
+├── store/                # Zustand stores
 └── types/                # 类型定义
 ```
 
@@ -113,6 +114,20 @@ src/
 | `Loading` | SVG 加载动画 |
 | `Access` | 条件渲染，`disable` 时显示 `fallback` |
 | `AutoTooltip` | 文本溢出自动 Tooltip |
+
+## Tailwind CSS
+
+项目已集成 Tailwind CSS 4，使用 Vite 插件（`@tailwindcss/vite`）实现零配置启动。样式入口为 `src/styles/tailwind.css`，在 `main.tsx` 中导入。
+
+如需自定义主题或添加插件，编辑 `src/styles/tailwind.css`：
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3b82f6;
+}
+```
 
 ## HTTP 客户端
 

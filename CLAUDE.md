@@ -77,15 +77,17 @@ createRoot → StrictMode → ErrorBoundary(GlobalCrash) → App
 
 ### Hooks
 
-17 个通用 hooks 统一从 `@/hooks` 导出，包含: `useBoolean`, `useCounter`, `useCountdown`, `useDebounceFn`, `useDebounceValue`, `useDocumentTitle`, `useErrorBoundary`, `useEventListener`, `useInterval`, `useIsMobile`, `useLatest`, `useRequest`, `useScrollLock`, `useStorage`, `useThrottledFn`, `useTimeout`, `useUnmount`, `useComposedRef`。
+19 个通用 hooks 统一从 `@/hooks` 导出，包含: `useBoolean`, `useComposedRef`, `useCounter`, `useCountdown`, `useDebounceFn`, `useDebounceValue`, `useDocumentTitle`, `useErrorBoundary`, `useEventListener`, `useInterval`, `useIsMobile`, `useLatest`, `useRafInterval`, `useRequest`, `useScrollLock`, `useStorage`, `useThrottledFn`, `useTimeout`, `useUnmount`。
 
 **核心模式 — `useLatest`**: 几乎所有 hooks 的基石。用 `useRef` 存储传入值，每帧更新 `ref.current`，从而在闭包中始终读取最新值。这使得 hooks 可以安全地省略回调依赖，避免 `exhaustive-deps` 误报。
 
 **`useRequest`**: 全功能异步请求 hook。自动管理 `AbortController`（新请求自动取消旧请求），防卸载后 setState，支持 `immediate`/`debounceWait`/`mutate`/`refresh`/`cancel`。回调（`onSuccess`/`onError`）存储在 `useLatest` ref 中以避免重建 `runAsync`。
 
+**`useRafInterval`**: rAF 驱动的定时器，基于 `requestAnimationFrame` + `performance.now()` 累计时间触发。相比 `useInterval`，后台标签页自动暂停无开销，切回前台基于时间差准确恢复，不会出现累计漂移。
+
 ### 状态管理
 
-项目安装了 Zustand 5，stores 目录为空，按需在 `src/stores/` 下创建。
+项目安装了 Zustand 5，store 文件位于 `src/store/` 下。
 
 **Store 模式**: 参考 `src/store/useAuthor.ts` — 三层中间件包裹：
 
@@ -123,7 +125,7 @@ pnpm init-dep tailwindcss 4   # 安装 Tailwind CSS v4
 
 ### Tailwind CSS
 
-项目未预装 Tailwind，但已就绪：`prettier-plugin-tailwindcss` 和 `stylelint-config-tailwindcss` 已在 devDependencies 中。需要时通过 `pnpm init-dep tailwindcss <version>` 安装。
+项目已安装 Tailwind CSS 4（`tailwindcss` + `@tailwindcss/vite`），样式入口文件为 `src/styles/tailwind.css`，在 `main.tsx` 中导入。同时配置了 `prettier-plugin-tailwindcss` 和 `stylelint-config-tailwindcss` 以保证代码风格一致性。
 
 ### Git 提交规范
 
