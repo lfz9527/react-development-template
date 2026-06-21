@@ -47,9 +47,10 @@ function parseArgs() {
 
 async function runScript(scriptPath: string, envVars: Record<string, unknown>) {
   return new Promise<void>((resolve, reject) => {
-    const child = spawn('npx', ['tsx', scriptPath], {
+    const child = spawn('pnpm', ['exec', 'tsx', scriptPath], {
       cwd: ROOT_DIR,
       stdio: 'inherit',
+      shell: true,
       env: {
         ...process.env,
         INIT_PAYLOAD: JSON.stringify(envVars),
