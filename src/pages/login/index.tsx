@@ -92,9 +92,7 @@ export default function Login() {
         </div>
       </div>
       <AutoTooltip
-        text={
-          'tokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken'
-        }
+        text={token}
         lines={lines}
       />
     </div>
