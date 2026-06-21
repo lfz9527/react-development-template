@@ -7,13 +7,14 @@ function getContainer(ui: React.ReactElement) {
 }
 
 describe('Flex', () => {
-  it('默认渲染 flex 容器', () => {
+  it('默认渲染 flex 容器且宽度 100%', () => {
     const el = getContainer(
       <Flex>
         <span>a</span>
       </Flex>
     )
     expect(el.className).toContain('flex')
+    expect(el.className).toContain('w-full')
   })
 
   it('vertical 添加 flex-col', () => {

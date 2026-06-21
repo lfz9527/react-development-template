@@ -60,7 +60,7 @@ function Flex({
   style,
   children,
 }: FlexProps) {
-  const classes: string[] = ['flex']
+  const classes: string[] = ['flex', 'w-full']
 
   if (vertical) classes.push('flex-col')
 
