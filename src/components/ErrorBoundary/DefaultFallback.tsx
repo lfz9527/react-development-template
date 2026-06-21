@@ -1,10 +1,9 @@
 import { type FallbackProps } from './types'
-import styles from './DefaultFallback.module.css'
 
 const DefaultFallback = ({ error, reset }: FallbackProps) => (
-  <div className={styles['wrapper']}>
-    <p style={{ fontWeight: 500, color: '#A32D2D' }}>Something went wrong</p>
-    <pre style={{ fontSize: '12px', color: '#791F1F' }}>{error.message}</pre>
+  <div className='rounded-lg border border-[#e24b4a] p-6'>
+    <p className='font-medium text-[#A32D2D]'>Something went wrong</p>
+    <pre className='text-xs text-[#791F1F]'>{error.message}</pre>
     <button onClick={reset}>Try again</button>
   </div>
 )
