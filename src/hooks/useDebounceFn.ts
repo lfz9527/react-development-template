@@ -42,7 +42,6 @@ export function useDebounceFn<T extends Global.AnyFunction>(
     lastArgsRef.current = null
   }, [])
 
-  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const flush = useCallback(() => {
     if (timerRef.current && lastArgsRef.current) {
       clearTimeout(timerRef.current)
@@ -54,7 +53,6 @@ export function useDebounceFn<T extends Global.AnyFunction>(
   }, [])
 
   const run = useCallback(
-    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (...args: Parameters<T>) => {
       lastArgsRef.current = args
       // leading：第一次调用立即执行

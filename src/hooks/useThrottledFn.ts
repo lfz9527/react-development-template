@@ -26,27 +26,23 @@ export function useThrottleFn<T extends (...args: unknown[]) => unknown>(
     }
   }, [])
 
-  const run = useCallback(
-    // eslint-disable-next-line react-hooks/preserve-manual-memoization
-    (...args: Parameters<T>) => {
-      clearTimer()
-      const now = Date.now()
-      const timeSinceLastCall = now - lastCallTime.current
-      const delay = wait - timeSinceLastCall
-      lastArgs.current = args
+  const run = useCallback((...args: Parameters<T>) => {
+    clearTimer()
+    const now = Date.now()
+    const timeSinceLastCall = now - lastCallTime.current
+    const delay = wait - timeSinceLastCall
+    lastArgs.current = args
 
-      if (delay <= 0) {
-        lastCallTime.current = now
+    if (delay <= 0) {
+      lastCallTime.current = now
+      fnRef.current(...args)
+    } else {
+      timer.current = setTimeout(() => {
+        lastCallTime.current = Date.now()
         fnRef.current(...args)
-      } else {
-        timer.current = setTimeout(() => {
-          lastCallTime.current = Date.now()
-          fnRef.current(...args)
-        }, delay)
-      }
-    },
-    []
-  )
+      }, delay)
+    }
+  }, [])
 
   useUnmount(() => {
     clearTimer()

@@ -30,7 +30,6 @@ export function useComposedRef<T>(...refs: Ref<T>[]): RefCallback<T> {
   const storedRefs = useLatest(refs)
 
   return useCallback(
-    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (node: T | null) => {
       for (const ref of storedRefs.current) {
         setRef(ref, node)
