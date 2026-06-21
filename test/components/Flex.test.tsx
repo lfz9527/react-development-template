@@ -53,13 +53,13 @@ describe('Flex', () => {
     expect(el.className).toContain('flex-wrap')
   })
 
-  it('gap 映射到 gap-N', () => {
+  it('gap 映射到 inline style gap 属性', () => {
     const el = getContainer(
       <Flex gap={4}>
         <span>a</span>
       </Flex>
     )
-    expect(el.className).toContain('gap-4')
+    expect(el.style.gap).toBe('1rem')
   })
 
   it('center 快捷设置 items-center justify-center', () => {

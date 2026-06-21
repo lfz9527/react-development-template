@@ -72,14 +72,18 @@ function Flex({
   }
 
   if (wrap) classes.push(wrapMap[wrap])
-  if (gap !== undefined) classes.push(`gap-${gap}`)
   if (flex !== undefined) classes.push(flexChildMap[String(flex)])
   if (className) classes.push(className)
+
+  const mergedStyle: CSSProperties = {
+    ...style,
+    ...(gap !== undefined ? { gap: `${gap * 0.25}rem` } : {}),
+  }
 
   return (
     <div
       className={classes.join(' ')}
-      style={style}
+      style={mergedStyle}
     >
       {children}
     </div>
