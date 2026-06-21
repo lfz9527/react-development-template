@@ -105,6 +105,24 @@ describe('Flex', () => {
     expect(el.className).toContain('[&>*]:flex-auto')
   })
 
+  it('flex="none" 给直接子元素添加 [&>*]:flex-none', () => {
+    const el = getContainer(
+      <Flex flex='none'>
+        <span>a</span>
+      </Flex>
+    )
+    expect(el.className).toContain('[&>*]:flex-none')
+  })
+
+  it('flex="initial" 给直接子元素添加 [&>*]:flex-initial', () => {
+    const el = getContainer(
+      <Flex flex='initial'>
+        <span>a</span>
+      </Flex>
+    )
+    expect(el.className).toContain('[&>*]:flex-initial')
+  })
+
   it('className 合并到容器', () => {
     const el = getContainer(
       <Flex className='custom'>

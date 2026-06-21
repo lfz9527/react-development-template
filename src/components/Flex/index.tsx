@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from 'react'
 type Align = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
 type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 type Wrap = 'wrap' | 'nowrap' | 'wrap-reverse'
-type FlexValue = number | 'auto' | 'none' | 'initial'
+type FlexValue = 1 | 'auto' | 'none' | 'initial'
 
 type FlexProps = {
   vertical?: boolean
