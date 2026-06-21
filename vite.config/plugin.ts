@@ -7,6 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import stylelint from 'vite-plugin-stylelint'
 import { createIconsPlugin } from './icons'
 import type { ImportMetaEnv } from '../src/types/env'
+import tailwindcss from '@tailwindcss/vite'
 
 type Props = {
   mode: ConfigEnv['mode']
@@ -21,6 +22,7 @@ export const buildPlugins = ({ env, isBuild }: Props) => {
 
   const plugins: PluginOption[] = [
     react(),
+    tailwindcss(),
     createIconsPlugin(path.resolve(__dirname, '../src/assets/icon')),
     stylelint({
       fix: true, // 开启自动修复

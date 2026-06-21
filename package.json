@@ -16,7 +16,6 @@
     "preview": "vite preview",
     "prepare": "husky",
     "commit": "git add . && git-cz",
-    "init-dep": "tsx ./scripts/init-deps/index.ts",
     "globalInstall": "tsx ./scripts/install-global.ts",
     "---": "rimraf 是安装在全局的命令，用于删除文件和目录 可执行 pnpm globalInstall 安装",
     "clean": "rimraf node_modules  pnpm-lock.yaml || exit 0"
@@ -48,10 +47,12 @@
     ]
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.1",
     "clsx": "^2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router": "^7.14.0",
+    "tailwindcss": "^4.3.1",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
@@ -77,7 +78,6 @@
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^16.4.0",
-    "local-pkg": "^1.1.2",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rollup-plugin-visualizer": "^7.0.1",
@@ -85,7 +85,6 @@
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-tailwindcss": "^1.0.1",
-    "ts-morph": "^27.0.2",
     "tsx": "^4.22.4",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.57.0",
