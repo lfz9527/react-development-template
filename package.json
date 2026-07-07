@@ -24,11 +24,11 @@
     "commitizen": {
       "path": "node_modules/cz-customizable",
       "config": {
-        "path": "./.cz-config.cjs"
+        "path": "./commit-kit/.cz-config.cjs"
       }
     },
     "cz-customizable": {
-      "config": "./.cz-config.cjs"
+      "config": "./commit-kit/.cz-config.cjs"
     }
   },
   "lint-staged": {
@@ -50,7 +50,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.0",
+    "@commitlint/cli": "^20.5.3",
     "@eslint/js": "^9.39.4",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -61,7 +61,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "commitizen": "^4.3.1",
+    "commitizen": "^4.3.2",
     "commitlint-config-cz": "^0.13.3",
     "cz-customizable": "^7.5.4",
     "eslint": "^9.39.4",
@@ -87,6 +87,7 @@
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-stylelint": "^6.1.0",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "xt-commit-kit": "^1.0.0"
   }
 }

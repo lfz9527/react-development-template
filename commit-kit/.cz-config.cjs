@@ -45,5 +45,5 @@ module.exports = {
   subjectLimit: 100,
 
   // 4. 提效配置：默认跳过详细描述和关联 Issue，极大提升日常提交效率（如需要可在此数组中移除）
-  skipQuestions: ['scope', 'body', 'breaking', 'footer'],
-}
+  skipQuestions: ['scope', 'breaking', 'footer'],
+};
