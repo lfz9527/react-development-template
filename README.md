@@ -39,6 +39,8 @@ pnpm preview
 | `pnpm lint` | ESLint 检查 |
 | `pnpm lint:fix` | ESLint 自动修复 |
 | `pnpm format` | Prettier 格式化 |
+| `pnpm test` | 运行所有测试 (vitest run) |
+| `pnpm test:watch` | 监听模式运行测试 |
 | `pnpm preview` | 预览生产构建 |
 | `pnpm commit` | commitizen 交互式提交 |
 | `pnpm globalInstall` | 安装全局工具 (rimraf) |
@@ -55,7 +57,9 @@ src/
 │   ├── LazyImport/       # 懒加载 + Suspense 包装
 │   ├── Loading/          # SVG 加载动画
 │   ├── Access/           # 条件渲染
-│   └── AutoTooltip/      # 文本溢出提示
+│   ├── AutoTooltip/      # 文本溢出提示
+│   └── Flex/             # 弹性布局
+├── constants/            # 全局常量 (IS_PROD, MOBILE_BREAKPOINT 等)
 ├── hooks/                # 通用 hooks (19 个)
 ├── pages/                # 页面组件
 ├── router/               # 路由配置
@@ -67,7 +71,9 @@ src/
 │   ├── request.ts        # 预置实例
 │   └── index.ts          # 业务 API
 ├── store/                # Zustand stores
-└── types/                # 类型定义
+├── styles/               # 全局样式 (index.css, tailwind.css)
+├── types/                # 类型定义
+└── utils/                # 工具函数 (cn, uid)
 ```
 
 ## 环境变量
@@ -114,6 +120,18 @@ src/
 | `Loading` | SVG 加载动画 |
 | `Access` | 条件渲染，`disable` 时显示 `fallback` |
 | `AutoTooltip` | 文本溢出自动 Tooltip |
+| `Flex` | 弹性布局，支持方向、对齐、间距、flex 子项等属性 |
+
+## 测试体系
+
+测试框架: Vitest 4 + jsdom + Testing Library（react + user-event + jest-dom）。`globals: true` 使得 `describe`/`it`/`expect`/`vi` 全局可用，无需显式导入。
+
+```bash
+pnpm test          # 运行所有测试
+pnpm test:watch    # 监听模式
+```
+
+测试文件统一放在 `test/` 目录下，按 `hooks/`、`components/` 分类。
 
 ## Tailwind CSS
 

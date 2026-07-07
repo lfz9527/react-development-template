@@ -74,6 +74,7 @@ createRoot → StrictMode → ErrorBoundary(GlobalCrash) → App
 | `Loading`               | SVG 加载动画（通过 unplugin-icons 导入本地 SVG）                    |
 | `Access`                | 条件渲染，`disable` 为 true 时显示 `fallback`                       |
 | `AutoTooltip`           | 文本溢出时自动显示 Tooltip                                          |
+| `Flex`                  | 弹性布局组件，支持方向、对齐、间距、flex 子项等属性                 |
 
 ### Hooks
 
@@ -94,6 +95,17 @@ createRoot → StrictMode → ErrorBoundary(GlobalCrash) → App
 1. 内层 `persist` — 持久化到 `sessionStorage`
 2. 中层 `devtools` — Redux DevTools 集成
 3. 外层自定义 `logger` — 开发环境自动打印状态变更日志
+
+### 工具函数
+
+`src/utils/` 下的通用工具：
+
+- `cn()` — clsx 封装，用于合并 Tailwind CSS 类名
+- `uid()` — 基于时间戳 + 随机数的唯一 ID 生成
+
+### 常量
+
+`src/constants/` 下定义全局常量：`IS_PROD`、`IS_DEV`、`MOBILE_BREAKPOINT`（768px）、`APP_NAMES`。
 
 ### Vite 配置
 
